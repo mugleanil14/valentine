@@ -395,37 +395,33 @@ button.primary {
   50% { box-shadow: 0 12px 35px rgba(240,198,120,0.9); }
 }
 
-/* GIF container */
-.gif-container {
+/* Photo/GIF container */
+.media-container {
   margin-bottom: 20px;
-  width: 240px;
-  height: 240px;
+  width: 280px;
+  height: 280px;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0,0,0,0.6);
   border: 3px solid rgba(255,255,255,0.2);
   flex-shrink: 0;
+  transition: opacity 0.5s;
 }
 
-.gif-container img {
+.media-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.gif-container.opening {
-  width: 280px;
-  height: 280px;
+.media-container.small {
+  width: 240px;
+  height: 240px;
 }
 
-.gif-container.timeline {
-  width: 220px;
-  height: 220px;
-}
-
-.gif-container.final {
-  width: 300px;
-  height: 300px;
+.media-container.large {
+  width: 320px;
+  height: 320px;
 }
 
 @media (max-width: 640px) {
@@ -433,14 +429,14 @@ button.primary {
     min-height: 500px;
   }
   
-  .gif-container {
-    width: 200px;
-    height: 200px;
-  }
-  
-  .gif-container.opening {
+  .media-container {
     width: 220px;
     height: 220px;
+  }
+  
+  .media-container.large {
+    width: 260px;
+    height: 260px;
   }
   
   .question {
@@ -466,7 +462,6 @@ button.primary {
 <!-- Music -->
 <audio id="bgMusic" loop preload="auto">
   <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
-  <source src="https://assets.mixkit.co/music/preview/mixkit-a-very-happy-christmas-897.mp3" type="audio/mpeg">
 </audio>
 
 <button class="music-control" id="musicBtn" onclick="toggleMusic()">
@@ -488,20 +483,20 @@ button.primary {
 
   <div class="content">
     
-    <!-- Screen 1: Opening -->
+    <!-- Screen 1: Opening - WATCH PHOTO -->
     <div class="screen active" id="screen1">
-      <div class="gif-container opening">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWQxNmgzMGZsaW45YnAxMnhrMGFjdWdpNDdkanc0b2U5ZXR1Mm52byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRuo6sLetdllPAQ/giphy.gif" alt="Welcome love">
+      <div class="media-container">
+        <img src="watch.JPG" alt="Time with you">
       </div>
       <div class="heading">Добро пожаловать в наш мир.</div>
       <div class="subtext">Коснись экрана и продолжи.</div>
       <div class="hint" onclick="showScreen(2)">Tap · Коснись</div>
     </div>
 
-    <!-- Screen 2: Question 1 -->
+    <!-- Screen 2: Question 1 - MUSEUM PHOTO -->
     <div class="screen" id="screen2">
-      <div class="gif-container">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzVlNXp6cmRyOGRpaGIyMHVveWtsMTRsYnc4cjJ3OWIzNm50amhpcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPwoeGErMmaI43S/giphy.gif" alt="Couple thinking">
+      <div class="media-container small">
+        <img src="museum.JPG" alt="Together">
       </div>
       <div class="question">Do you know when we met?</div>
       <div class="buttons">
@@ -510,21 +505,21 @@ button.primary {
       </div>
     </div>
 
-    <!-- Screen 3: Timeline -->
+    <!-- Screen 3: Timeline with changing images -->
     <div class="screen" id="screen3">
       <div class="timeline-section">
-        <div class="gif-container timeline">
-          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGxjazJxZWlxcnU0cnYyb3BwN3QydXZrcjY5aTRld2J0OWk1YnJhNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnwgQ8Wjs1sUB4k/giphy.gif" alt="Stars">
+        <div class="media-container small">
+          <img id="timelineImage" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGxjazJxZWlxcnU0cnYyb3BwN3QydXZrcjY5aTRld2J0OWk1YnJhNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnwgQ8Wjs1sUB4k/giphy.gif" alt="Timeline">
         </div>
         <div class="timeline-text" id="timelineText"></div>
         <div class="timeline-counter" id="timelineCounter"></div>
       </div>
     </div>
 
-    <!-- Screen 4: Question 2 -->
+    <!-- Screen 4: Question 2 - PARIS NIGHT PHOTO -->
     <div class="screen" id="screen4">
-      <div class="gif-container">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWE3NWxlYXh0cWRhajQweGhlbjN0c24ybnlwaGdscjJvc3l0NnNpMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KEYEpIngcmXlHetDqz/giphy.gif" alt="Choice">
+      <div class="media-container small">
+        <img src="paris-night.jpg" alt="Paris">
       </div>
       <div class="question">Would you choose this story?</div>
       <div class="buttons">
@@ -534,11 +529,11 @@ button.primary {
       <div class="tease" id="teaseText">Some moments don't repeat.</div>
     </div>
 
-    <!-- Screen 5: Final -->
+    <!-- Screen 5: Final - HUGGING AT ARC -->
     <div class="screen" id="screen5">
       <div class="final-section">
-        <div class="gif-container final">
-          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTlwOXhtdjVlZ3QzeXd5OHZ0azlnemw2bmcydWFnNGtlaWU1YnBvZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2QDM9Jnim1YVILXa/giphy.gif" alt="Love">
+        <div class="media-container large">
+          <img src="arc%20hug.jpg" alt="Forever">
         </div>
         <div class="final-text">
           <p class="final-line">From the moment we met…</p>
@@ -584,19 +579,12 @@ function toggleMusic() {
     musicPlaying = false;
   } else {
     music.play().then(() => {
-      status.textContent = '♫ PLAYING... (Click to Pause)';
+      status.textContent = '♫ PLAYING...';
       btn.classList.add('playing');
       musicPlaying = true;
     }).catch(err => {
-      console.error('Music play failed:', err);
-      status.textContent = 'CLICK AGAIN TO PLAY';
-      setTimeout(() => {
-        music.play().then(() => {
-          status.textContent = '♫ PLAYING... (Click to Pause)';
-          btn.classList.add('playing');
-          musicPlaying = true;
-        }).catch(e => console.error('Retry failed:', e));
-      }, 500);
+      status.textContent = 'CLICK AGAIN';
+      setTimeout(() => music.play(), 500);
     });
   }
 }
@@ -643,12 +631,28 @@ function showHeart() {
   }
 }
 
+// Timeline with storylines and matching images
 const phases = [
-  "Before time learned how to count…",
-  "When legends shaped destiny…",
-  "When the world was at war…",
-  "When the world became connected…",
-  "And then… Paris."
+  {
+    text: "When galaxies were forming in the cosmos…",
+    image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGxjazJxZWlxcnU0cnYyb3BwN3QydXZrcjY5aTRld2J0OWk1YnJhNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnwgQ8Wjs1sUB4k/giphy.gif"
+  },
+  {
+    text: "When the pyramids stones were set…",
+    image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3RxZXF4Ym4yaXM4cGdjZ3h5NnB4aHJ6dWlub29jeDU1cnl1NXc0ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlDHQEiIdY3kxlm/giphy.gif"
+  },
+  {
+    text: "When histories were written in blood and glory…",
+    image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmx1dHN5NjF5cWRsZGRyeWE2aHcxanZ4Mzh6ZGp4OXNwY3VnbWE5biZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPnAiaMCws8nOsE/giphy.gif"
+  },
+  {
+    text: "When the world became connected…",
+    image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzZ1Z2t5N2g1OW5tZ3c4YWphZHR1YnQ5c3Y3cDFjcGdiMjYwbnRiYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlPwMAzh13pcZ20/giphy.gif"
+  },
+  {
+    text: "And then… Paris.",
+    image: "arc%20woman.JPG"
+  }
 ];
 
 function startTimeline() {
@@ -657,12 +661,17 @@ function startTimeline() {
   
   function showPhase() {
     const textEl = document.getElementById('timelineText');
+    const imgEl = document.getElementById('timelineImage');
+    
     textEl.style.opacity = '0';
+    imgEl.style.opacity = '0';
     
     setTimeout(() => {
-      textEl.textContent = phases[i];
+      textEl.textContent = phases[i].text;
+      imgEl.src = phases[i].image;
       document.getElementById('timelineCounter').textContent = (i+1).toString().padStart(2, '0') + ' · 05';
       textEl.style.opacity = '1';
+      imgEl.style.opacity = '1';
     }, 500);
     
     i++;
