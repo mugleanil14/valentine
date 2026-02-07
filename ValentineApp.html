@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You ❤️</title>
 <style>
 * {
@@ -13,243 +12,148 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-  background: #0a0514;
-  color: #f6f1e7;
+  font-family: -apple-system, sans-serif;
+  background: #1a0f2e;
+  color: white;
+  padding: 20px;
   overflow-x: hidden;
-  min-height: 100vh;
-}
-
-/* SPLASH SCREEN */
-.splash-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #1a0b1f 0%, #05030b 50%, #0d0416 100%);
-  z-index: 99999;
-  transition: opacity 0.8s ease;
-}
-
-.splash-screen.hide {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.app-icon {
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(135deg, #5b1a2f 0%, #ff4b7d 100%);
-  border-radius: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 60px;
-  margin-bottom: 24px;
-  box-shadow: 0 20px 60px rgba(255, 75, 125, 0.4);
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-.app-name {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #f6f1e7;
-}
-
-.app-tagline {
-  font-size: 14px;
-  color: rgba(246, 241, 231, 0.6);
-  margin-bottom: 40px;
-}
-
-.loading-dots {
-  display: flex;
-  gap: 8px;
-}
-
-.loading-dots span {
-  width: 8px;
-  height: 8px;
-  background: #ff4b7d;
-  border-radius: 50%;
-  animation: bounce 1.4s ease-in-out infinite;
-}
-
-.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes bounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
 }
 
 /* FLOATING BACKGROUND */
-.floating-bg {
+.floaters {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
+  z-index: 0;
 }
 
-.float-item {
+.float {
   position: absolute;
-  font-size: 30px;
-  opacity: 0;
+  font-size: 25px;
+  animation: rise 10s ease-in-out infinite;
 }
 
-@keyframes floatUp {
-  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.6; }
-  90% { opacity: 0.3; }
-  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+@keyframes rise {
+  0% { transform: translateY(100vh); opacity: 0; }
+  50% { opacity: 0.6; }
+  100% { transform: translateY(-100vh); opacity: 0; }
 }
 
 /* MAIN CONTENT */
-.main-container {
+.container {
   position: relative;
   z-index: 10;
-  min-height: 100vh;
-  padding-top: 0;
-}
-
-.header {
-  padding: 60px 20px 30px;
-  text-align: center;
-  background: rgba(10, 5, 20, 0.9);
-  backdrop-filter: blur(10px);
-}
-
-.header h1 {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: #f6f1e7;
-}
-
-.header p {
-  font-size: 16px;
-  color: #f0c678;
-}
-
-.content {
-  padding: 20px;
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
-/* CARDS */
-.card {
-  background: rgba(30, 15, 40, 0.95);
-  border: 2px solid rgba(255, 75, 125, 0.3);
-  border-radius: 20px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+h1 {
+  text-align: center;
+  font-size: 40px;
+  margin: 20px 0 10px;
+  color: #ffd700;
 }
 
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.card-icon {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, #5b1a2f 0%, #ff4b7d 100%);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-}
-
-.card-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #f6f1e7;
-}
-
-.card-text {
+.subtitle {
+  text-align: center;
   font-size: 16px;
-  line-height: 1.6;
-  color: #f6f1e7;
-  margin-bottom: 12px;
+  color: #ff69b4;
+  margin-bottom: 30px;
 }
 
-.card-image {
+/* CARD */
+.card {
+  background: linear-gradient(135deg, #2d1b4e 0%, #1f0f3d 100%);
+  border: 3px solid #ff69b4;
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 40px rgba(255, 105, 180, 0.3);
+}
+
+.card h2 {
+  font-size: 24px;
+  color: #ffd700;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  font-size: 30px;
+}
+
+.card p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.card img {
   width: 100%;
-  border-radius: 16px;
-  margin-top: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  margin-top: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* TIMELINE */
-.timeline-item {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 20px;
+.timeline {
+  margin: 15px 0;
 }
 
-.timeline-dot {
-  width: 12px;
-  height: 12px;
-  background: #ff4b7d;
-  border-radius: 50%;
-  margin-top: 6px;
-  box-shadow: 0 0 15px #ff4b7d;
-  flex-shrink: 0;
+.timeline-item {
+  margin-bottom: 20px;
+  padding-left: 25px;
+  border-left: 3px solid #ff69b4;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: '●';
+  position: absolute;
+  left: -9px;
+  color: #ff69b4;
+  font-size: 20px;
 }
 
 .timeline-date {
-  font-size: 13px;
-  color: #f0c678;
-  font-weight: 600;
-  margin-bottom: 6px;
+  color: #ffd700;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .timeline-text {
-  font-size: 15px;
+  color: white;
+  font-size: 16px;
   line-height: 1.5;
-  color: #f6f1e7;
   margin-bottom: 10px;
 }
 
-.timeline-image {
+.timeline-item img {
   width: 100%;
-  border-radius: 12px;
-  margin-top: 8px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
 /* BUTTON */
 .btn {
   width: 100%;
-  padding: 18px;
-  background: linear-gradient(135deg, #5b1a2f 0%, #ff4b7d 100%);
+  padding: 20px;
+  background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
   border: none;
-  border-radius: 16px;
-  color: #f6f1e7;
-  font-size: 18px;
-  font-weight: 600;
+  border-radius: 15px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(255, 75, 125, 0.4);
-  transition: transform 0.2s;
+  box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+  margin-top: 15px;
 }
 
 .btn:active {
@@ -257,309 +161,199 @@ body {
 }
 
 /* MUSIC PLAYER */
-.music-player {
+.music {
   position: fixed;
-  bottom: 30px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(30, 15, 40, 0.95);
-  border: 2px solid rgba(255, 75, 125, 0.5);
+  background: linear-gradient(135deg, #2d1b4e 0%, #1f0f3d 100%);
+  border: 3px solid #ff69b4;
   border-radius: 50px;
-  padding: 14px 28px;
+  padding: 15px 30px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  gap: 15px;
+  box-shadow: 0 8px 30px rgba(255, 105, 180, 0.5);
   z-index: 1000;
 }
 
-.music-btn {
-  width: 45px;
-  height: 45px;
-  background: linear-gradient(135deg, #5b1a2f 0%, #ff4b7d 100%);
+.play-btn {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
   border: none;
   border-radius: 50%;
   color: white;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.music-text {
-  font-size: 14px;
-  color: #f6f1e7;
-  font-weight: 500;
-}
-
-.visualizer {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-}
-
-.bar {
-  width: 3px;
-  background: #ff4b7d;
-  border-radius: 2px;
-  animation: wave 0.8s ease-in-out infinite;
-}
-
-.bar:nth-child(2) { animation-delay: 0.1s; }
-.bar:nth-child(3) { animation-delay: 0.2s; }
-.bar:nth-child(4) { animation-delay: 0.3s; }
-
-@keyframes wave {
-  0%, 100% { height: 8px; }
-  50% { height: 24px; }
+.music-label {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .hidden {
-  display: none !important;
+  display: none;
 }
 </style>
 </head>
 <body>
 
-<!-- SPLASH SCREEN -->
-<div class="splash-screen" id="splash">
-  <div class="app-icon">💝</div>
-  <div class="app-name">For My Valentine</div>
-  <div class="app-tagline">A Journey Through Time & Love</div>
-  <div class="loading-dots">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-
-<!-- FLOATING BACKGROUND -->
-<div class="floating-bg" id="floatingBg"></div>
+<!-- FLOATING ELEMENTS -->
+<div class="floaters" id="bg"></div>
 
 <!-- MAIN CONTENT -->
-<div class="main-container" id="mainContent" style="display: none;">
+<div class="container">
 
-  <div class="header">
-    <h1>Our Love Story</h1>
-    <p>Swipe to explore our journey 💕</p>
+  <h1>💕 Our Love Story 💕</h1>
+  <p class="subtitle">A Journey Through Time & Love</p>
+
+  <!-- CARD 1 -->
+  <div class="card">
+    <h2><span class="icon">✨</span> Welcome, My Love</h2>
+    <p>This isn't just an app—it's a time capsule of every moment that led us here. From galaxies forming billions of years ago to the exact second our eyes met in Paris.</p>
+    <img src="https://gleanil14.github.io/valentine-photos/IMG_8913.JPG" alt="Watch">
   </div>
 
-  <div class="content">
+  <!-- CARD 2 - TIMELINE -->
+  <div class="card">
+    <h2><span class="icon">⏳</span> Through the Ages</h2>
 
-    <!-- WELCOME CARD -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon">✨</div>
-        <div class="card-title">Welcome, My Love</div>
-      </div>
-      <div class="card-text">
-        This isn't just an app—it's a time capsule of every moment that led us here. 
-        From galaxies forming billions of years ago to the exact second our eyes met in Paris.
-      </div>
-      <img src="https://gleanil14.github.io/valentine-photos/IMG_8913.JPG" alt="Watch" class="card-image">
-    </div>
-
-    <!-- TIMELINE CARD -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon">⏳</div>
-        <div class="card-title">Through the Ages</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">13.8 Billion Years Ago</div>
+        <div class="timeline-text">When galaxies were forming in the cosmic dance, the atoms that would one day make us were being forged in distant stars ✨</div>
+        <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" alt="Galaxy">
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div>
-          <div class="timeline-date">13.8 Billion Years Ago</div>
-          <div class="timeline-text">When galaxies were forming in the cosmic dance, the atoms that would one day make us were being forged in distant stars ✨</div>
-          <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" alt="Galaxy" class="timeline-image">
-        </div>
+        <div class="timeline-date">4,500 Years Ago</div>
+        <div class="timeline-text">When pyramids were rising stone by stone under Egyptian skies, humanity was building monuments—but none as timeless as what we'd create 🏛️</div>
+        <img src="https://media.giphy.com/media/26FLdGCYk1RIXl5rG/giphy.gif" alt="Pyramids">
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div>
-          <div class="timeline-date">4,500 Years Ago</div>
-          <div class="timeline-text">When pyramids were rising stone by stone under Egyptian skies, humanity was building monuments—but none as timeless as what we'd create 🏛️</div>
-          <img src="https://media.giphy.com/media/26FLdGCYk1RIXl5rG/giphy.gif" alt="Pyramids" class="timeline-image">
-        </div>
+        <div class="timeline-date">500 Years Ago</div>
+        <div class="timeline-text">When histories were written in blood and glory, artists painted masterpieces, never knowing the greatest art would be two hearts finding each other 🎨</div>
+        <img src="https://media.giphy.com/media/xUOxeZy95wcv6hJfQQ/giphy.gif" alt="History">
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div>
-          <div class="timeline-date">500 Years Ago</div>
-          <div class="timeline-text">When histories were written in blood and glory, artists painted masterpieces, never knowing the greatest art would be two hearts finding each other 🎨</div>
-          <img src="https://media.giphy.com/media/xUOxeZy95wcv6hJfQQ/giphy.gif" alt="History" class="timeline-image">
-        </div>
+        <div class="timeline-date">The Modern World</div>
+        <div class="timeline-text">When the world became connected, when planes could fly us across oceans, destiny was preparing the perfect moment for two souls to collide 🌍</div>
+        <img src="https://gleanil14.github.io/valentine-photos/IMG_9147.JPG" alt="Paris Street">
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div>
-          <div class="timeline-date">The Modern World</div>
-          <div class="timeline-text">When the world became connected, when planes could fly us across oceans, destiny was preparing the perfect moment for two souls to collide 🌍</div>
-          <img src="https://gleanil14.github.io/valentine-photos/IMG_9147.JPG" alt="Paris Street" class="timeline-image">
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div>
-          <div class="timeline-date">That Perfect Day in Paris</div>
-          <div class="timeline-text">And then... beneath the Arc de Triomphe, time stopped. The universe had been preparing for this moment. For us. 🗼❤️</div>
-          <img src="https://gleanil14.github.io/valentine-photos/IMG_9162.JPG" alt="Us at Arc" class="timeline-image">
-        </div>
+        <div class="timeline-date">That Perfect Day in Paris</div>
+        <div class="timeline-text">And then... beneath the Arc de Triomphe, time stopped. The universe had been preparing for this moment. For us. 🗼❤️</div>
+        <img src="https://gleanil14.github.io/valentine-photos/IMG_9162.JPG" alt="Us">
       </div>
     </div>
-
-    <!-- MUSEUM CARD -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon">🖼️</div>
-        <div class="card-title">Every Moment Together</div>
-      </div>
-      <div class="card-text">
-        From museums to streets, from sunrise to sunset—every frame with you is a masterpiece.
-      </div>
-      <img src="https://gleanil14.github.io/valentine-photos/IMG_9133.JPG" alt="Museum" class="card-image">
-    </div>
-
-    <!-- QUESTION CARD -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon">💭</div>
-        <div class="card-title">A Question for You</div>
-      </div>
-      <div class="card-text">
-        Do you believe in destiny? That every star, every moment, every choice across billions of years was orchestrated just so we could find each other?
-      </div>
-      <button class="btn" onclick="reveal()">Yes, I Believe 💫</button>
-    </div>
-
-    <!-- HIDDEN MESSAGE -->
-    <div class="card hidden" id="hiddenCard">
-      <div class="card-header">
-        <div class="card-icon">💖</div>
-        <div class="card-title">Then You Already Know...</div>
-      </div>
-      <div class="card-text">
-        That you're not just my Valentine—you're my universe. Every sunrise, every heartbeat, every moment forward... 
-        it's all for you. Happy Valentine's Day, my love. Here's to infinity together. 🌟
-      </div>
-      <img src="https://gleanil14.github.io/valentine-photos/IMG_9151.JPG" alt="Paris Night" class="card-image">
-    </div>
-
-    <div style="height: 120px;"></div>
   </div>
+
+  <!-- CARD 3 -->
+  <div class="card">
+    <h2><span class="icon">🖼️</span> Every Moment Together</h2>
+    <p>From museums to streets, from sunrise to sunset—every frame with you is a masterpiece.</p>
+    <img src="https://gleanil14.github.io/valentine-photos/IMG_9133.JPG" alt="Museum">
+  </div>
+
+  <!-- CARD 4 - QUESTION -->
+  <div class="card">
+    <h2><span class="icon">💭</span> A Question for You</h2>
+    <p>Do you believe in destiny? That every star, every moment, every choice across billions of years was orchestrated just so we could find each other?</p>
+    <button class="btn" onclick="showMessage()">Yes, I Believe 💫</button>
+  </div>
+
+  <!-- HIDDEN CARD -->
+  <div class="card hidden" id="secret">
+    <h2><span class="icon">💖</span> Then You Already Know...</h2>
+    <p>That you're not just my Valentine—you're my universe. Every sunrise, every heartbeat, every moment forward... it's all for you. Happy Valentine's Day, my love. Here's to infinity together. 🌟</p>
+    <img src="https://gleanil14.github.io/valentine-photos/IMG_9151.JPG" alt="Paris Night">
+  </div>
+
+  <div style="height: 120px;"></div>
 </div>
 
 <!-- MUSIC PLAYER -->
-<div class="music-player" id="musicPlayer" style="display: none;">
-  <button class="music-btn" id="playBtn" onclick="playMusic()">▶️</button>
-  <div class="music-text" id="musicText">Tap to Play Music</div>
-  <div class="visualizer hidden" id="viz">
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-  </div>
+<div class="music">
+  <button class="play-btn" id="btn" onclick="toggleMusic()">▶️</button>
+  <div class="music-label" id="label">Click to Play Music</div>
 </div>
 
 <audio id="audio" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4a3f8c38a0.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4a3f8c38a0.mp3">
 </audio>
 
 <script>
-// HIDE SPLASH AND SHOW CONTENT
-setTimeout(() => {
-  document.getElementById('splash').classList.add('hide');
-  setTimeout(() => {
-    document.getElementById('splash').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
-    document.getElementById('musicPlayer').style.display = 'flex';
-  }, 800);
-}, 3000);
+// Create floating elements
+const bg = document.getElementById('bg');
+const emojis = ['🎈', '💕', '💖', '💗', '❤️'];
 
-// CREATE FLOATING ELEMENTS
-function createFloats() {
-  const bg = document.getElementById('floatingBg');
-  const emojis = ['🎈', '💕', '💖', '💗', '❤️', '💝'];
-
-  for (let i = 0; i < 15; i++) {
-    const item = document.createElement('div');
-    item.className = 'float-item';
-    item.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    item.style.left = Math.random() * 100 + '%';
-    item.style.animation = `floatUp ${8 + Math.random() * 4}s ease-in-out infinite`;
-    item.style.animationDelay = Math.random() * 5 + 's';
-    bg.appendChild(item);
-  }
+function addFloat() {
+  const el = document.createElement('div');
+  el.className = 'float';
+  el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  el.style.left = Math.random() * 100 + '%';
+  el.style.animationDelay = Math.random() * 3 + 's';
+  el.style.animationDuration = (8 + Math.random() * 4) + 's';
+  bg.appendChild(el);
+  setTimeout(() => el.remove(), 12000);
 }
 
-createFloats();
-setInterval(createFloats, 8000);
+for (let i = 0; i < 10; i++) addFloat();
+setInterval(addFloat, 2000);
 
-// MUSIC PLAYER
+// Music player
 const audio = document.getElementById('audio');
-const playBtn = document.getElementById('playBtn');
-const musicText = document.getElementById('musicText');
-const viz = document.getElementById('viz');
+const btn = document.getElementById('btn');
+const label = document.getElementById('label');
 let playing = false;
 
-function playMusic() {
+function toggleMusic() {
   if (playing) {
     audio.pause();
-    playBtn.textContent = '▶️';
-    musicText.textContent = 'Tap to Play Music';
-    viz.classList.add('hidden');
+    btn.textContent = '▶️';
+    label.textContent = 'Click to Play Music';
     playing = false;
   } else {
-    audio.play().then(() => {
-      playBtn.textContent = '⏸️';
-      musicText.textContent = 'Romantic Melody';
-      viz.classList.remove('hidden');
-      playing = true;
-    }).catch(e => {
-      alert('Tap the button to start music! 🎵');
-    });
+    audio.play();
+    btn.textContent = '⏸️';
+    label.textContent = 'Romantic Melody Playing';
+    playing = true;
   }
 }
 
-// REVEAL HIDDEN MESSAGE
-function reveal() {
-  document.getElementById('hiddenCard').classList.remove('hidden');
-  document.getElementById('hiddenCard').scrollIntoView({ behavior: 'smooth' });
+// Show secret message
+function showMessage() {
+  document.getElementById('secret').classList.remove('hidden');
+  document.getElementById('secret').scrollIntoView({ behavior: 'smooth' });
 
-  // Auto-play music
-  if (!playing) {
-    playMusic();
-  }
+  if (!playing) toggleMusic();
 
-  // Heart burst
-  const bg = document.getElementById('floatingBg');
-  for (let i = 0; i < 20; i++) {
+  // Heart explosion
+  for (let i = 0; i < 15; i++) {
     const heart = document.createElement('div');
     heart.textContent = '💖';
     heart.style.position = 'fixed';
-    heart.style.fontSize = '30px';
+    heart.style.fontSize = '35px';
     heart.style.left = '50%';
     heart.style.top = '50%';
     heart.style.zIndex = '9999';
     heart.style.pointerEvents = 'none';
 
-    const angle = (Math.PI * 2 * i) / 20;
-    const dist = 150;
+    const angle = (Math.PI * 2 * i) / 15;
+    const dist = 200;
     const x = Math.cos(angle) * dist;
     const y = Math.sin(angle) * dist;
 
     heart.animate([
       { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
-      { transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1)`, opacity: 0 }
-    ], {
-      duration: 1000,
-      easing: 'ease-out'
-    }).onfinish = () => heart.remove();
+      { transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.5)`, opacity: 0 }
+    ], { duration: 1200 }).onfinish = () => heart.remove();
 
     document.body.appendChild(heart);
   }
