@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>For You ❤️</title>
+<style>
+:root {
+  --bg-charcoal: #050509;
+  --bg-deep: #05030b;
+  --wine: #5b1a2f;
+  --wine-soft: #7b2342;
+  --ivory: #f6f1e7;
+  --gold-soft: #f0c678;
+  --accent: #ff4b7d;
+  --glass: rgba(255, 255, 255, 0.06);
+  --border-glass: rgba(255, 255, 255, 0.16);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  background: linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-charcoal) 50%, #0a0514 100%);
+  color: var(--ivory);
+  overflow: hidden;
+  height: 100vh;
+  position: relative;
+}
+
+/* SPLASH SCREEN */
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #1a0b1f 0%, var(--bg-deep) 50%, #0d0416 100%);
+  z-index: 9999;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.splash-screen.hide {
+  opacity: 0;
+  transform: scale(1.1);
+  pointer-events: none;
+}
+
+.app-icon {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, var(--wine) 0%, var(--accent) 100%);
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  margin-bottom: 24px;
+  box-shadow: 0 20px 60px rgba(255, 75, 125, 0.4);
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.app-name {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--ivory) 0%, var(--gold-soft) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-tagline {
+  font-size: 14px;
+  color: rgba(246, 241, 231, 0.6);
+  letter-spacing: 0.5px;
+  margin-bottom: 40px;
+}
+
+.loading-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* FLOATING ELEMENTS */
+.floating-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.balloon, .heart-float {
+  position: absolute;
+  animation-timing-function: ease-in-out;
+  opacity: 0;
+}
+
+.balloon {
+  font-size: 40px;
+  animation: balloonRise 8s ease-in-out infinite;
+}
+
+.heart-float {
+  font-size: 20px;
+  animation: heartFloat 6s ease-in-out infinite;
+}
+
+@keyframes balloonRise {
+  0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  50% { transform: translateY(-50vh) translateX(30px) rotate(10deg); opacity: 0.9; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-110vh) translateX(-20px) rotate(-5deg); opacity: 0; }
+}
+
+@keyframes heartFloat {
+  0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  50% { transform: translateY(40vh) scale(1) rotate(180deg); opacity: 0.8; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-10vh) scale(0.5) rotate(360deg); opacity: 0; }
+}
+
+/* MAIN APP CONTAINER */
+.app-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.app-container.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* APP HEADER */
+.app-header {
+  padding: 60px 20px 20px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.app-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--ivory) 0%, var(--gold-soft) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-header p {
+  font-size: 14px;
+  color: rgba(246, 241, 231, 0.7);
+  letter-spacing: 0.3px;
+}
+
+/* CONTENT AREA */
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* CARD STYLES */
+.card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: all 0.4s ease;
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--wine) 0%, var(--accent) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.card-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(246, 241, 231, 0.85);
+}
+
+.card-image {
+  width: 100%;
+  border-radius: 16px;
+  margin-top: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* INTERACTIVE BUTTON */
+.btn-primary {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--wine) 0%, var(--accent) 100%);
+  border: none;
+  border-radius: 16px;
+  color: var(--ivory);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 24px rgba(255, 75, 125, 0.3);
+}
+
+.btn-primary:active {
+  transform: scale(0.96);
+  box-shadow: 0 4px 12px rgba(255, 75, 125, 0.4);
+}
+
+/* TIMELINE */
+.timeline-item {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.4s; }
+.timeline-item:nth-child(4) { animation-delay: 0.6s; }
+.timeline-item:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-top: 6px;
+  box-shadow: 0 0 20px var(--accent);
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-date {
+  font-size: 12px;
+  color: var(--gold-soft);
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.timeline-text {
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(246, 241, 231, 0.9);
+}
+
+.timeline-image {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* MUSIC PLAYER */
+.music-player {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--glass);
+  backdrop-filter: blur(30px);
+  border: 1px solid var(--border-glass);
+  border-radius: 50px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+
+.music-btn {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--wine) 0%, var(--accent) 100%);
+  border: none;
+  border-radius: 50%;
+  color: var(--ivory);
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.music-btn:active {
+  transform: scale(0.9);
+}
+
+.music-info {
+  font-size: 13px;
+  color: rgba(246, 241, 231, 0.8);
+  letter-spacing: 0.3px;
+}
+
+.music-visualizer {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  height: 20px;
+}
+
+.music-bar {
+  width: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: musicBounce 0.8s ease-in-out infinite;
+}
+
+.music-bar:nth-child(2) { animation-delay: 0.1s; }
+.music-bar:nth-child(3) { animation-delay: 0.2s; }
+.music-bar:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes musicBounce {
+  0%, 100% { height: 8px; }
+  50% { height: 20px; }
+}
+
+/* HIDDEN CLASS */
+.hidden {
+  display: none !important;
+}
+
+/* SCROLL STYLING */
+.content-area::-webkit-scrollbar {
+  width: 4px;
+}
+
+.content-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content-area::-webkit-scrollbar-thumb {
+  background: var(--border-glass);
+  border-radius: 2px;
+}
+</style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div class="splash-screen" id="splashScreen">
+  <div class="app-icon">💝</div>
+  <div class="app-name">For My Valentine</div>
+  <div class="app-tagline">A Journey Through Time & Love</div>
+  <div class="loading-dots">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<!-- FLOATING ELEMENTS -->
+<div class="floating-elements" id="floatingElements"></div>
+
+<!-- MAIN APP -->
+<div class="app-container" id="appContainer">
+
+  <!-- HEADER -->
+  <div class="app-header">
+    <h1>Our Love Story</h1>
+    <p>Swipe to explore our journey 💕</p>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-area" id="contentArea">
+
+    <!-- WELCOME CARD WITH WATCH PHOTO -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">✨</div>
+        <div class="card-title">Welcome, My Love</div>
+      </div>
+      <div class="card-text">
+        This isn't just an app—it's a time capsule of every moment that led us here. 
+        From galaxies forming billions of years ago to the exact second our eyes met in Paris.
+      </div>
+      <img src="https://gleanil14.github.io/valentine-photos/IMG_8913.JPG" alt="Our Watch" class="card-image">
+    </div>
+
+    <!-- TIMELINE SECTION -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">⏳</div>
+        <div class="card-title">Through the Ages</div>
+      </div>
+
+      <div class="timeline-item" style="opacity: 0; transform: translateY(20px);">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">13.8 Billion Years Ago</div>
+          <div class="timeline-text">When galaxies were forming in the cosmic dance, the atoms that would one day make us were being forged in distant stars ✨</div>
+          <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" alt="Galaxy" class="timeline-image">
+        </div>
+      </div>
+
+      <div class="timeline-item" style="opacity: 0; transform: translateY(20px);">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">4,500 Years Ago</div>
+          <div class="timeline-text">When pyramids were rising stone by stone under Egyptian skies, humanity was building monuments—but none as timeless as what we'd create 🏛️</div>
+          <img src="https://media.giphy.com/media/26FLdGCYk1RIXl5rG/giphy.gif" alt="Pyramids" class="timeline-image">
+        </div>
+      </div>
+
+      <div class="timeline-item" style="opacity: 0; transform: translateY(20px);">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">500 Years Ago</div>
+          <div class="timeline-text">When histories were written in blood and glory, artists painted masterpieces, never knowing the greatest art would be two hearts finding each other 🎨</div>
+          <img src="https://media.giphy.com/media/xUOxeZy95wcv6hJfQQ/giphy.gif" alt="History" class="timeline-image">
+        </div>
+      </div>
+
+      <div class="timeline-item" style="opacity: 0; transform: translateY(20px);">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">The Modern World</div>
+          <div class="timeline-text">When the world became connected, when planes could fly us across oceans, destiny was preparing the perfect moment for two souls to collide 🌍</div>
+          <img src="https://gleanil14.github.io/valentine-photos/IMG_9147.JPG" alt="Paris Street" class="timeline-image">
+        </div>
+      </div>
+
+      <div class="timeline-item" style="opacity: 0; transform: translateY(20px);">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">That Perfect Day in Paris</div>
+          <div class="timeline-text">And then... beneath the Arc de Triomphe, time stopped. The universe had been preparing for this moment. For us. 🗼❤️</div>
+          <img src="https://gleanil14.github.io/valentine-photos/IMG_9162.JPG" alt="Arc de Triomphe - Us" class="timeline-image">
+        </div>
+      </div>
+    </div>
+
+    <!-- MUSEUM PHOTO CARD -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🖼️</div>
+        <div class="card-title">Every Moment Together</div>
+      </div>
+      <div class="card-text">
+        From museums to streets, from sunrise to sunset—every frame with you is a masterpiece.
+      </div>
+      <img src="https://gleanil14.github.io/valentine-photos/IMG_9133.JPG" alt="Museum Together" class="card-image">
+    </div>
+
+    <!-- QUESTION CARD -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">💭</div>
+        <div class="card-title">A Question for You</div>
+      </div>
+      <div class="card-text" style="margin-bottom: 16px;">
+        Do you believe in destiny? That every star, every moment, every choice across billions of years was orchestrated just so we could find each other?
+      </div>
+      <button class="btn-primary" onclick="revealAnswer()">Yes, I Believe 💫</button>
+    </div>
+
+    <!-- HIDDEN MESSAGE -->
+    <div class="card hidden" id="hiddenMessage">
+      <div class="card-header">
+        <div class="card-icon">💖</div>
+        <div class="card-title">Then You Already Know...</div>
+      </div>
+      <div class="card-text">
+        That you're not just my Valentine—you're my universe. Every sunrise, every heartbeat, every moment forward... 
+        it's all for you. Happy Valentine's Day, my love. Here's to infinity together. 🌟
+      </div>
+      <img src="https://gleanil14.github.io/valentine-photos/IMG_9151.JPG" alt="Paris Night" class="card-image">
+    </div>
+
+    <div style="height: 100px;"></div>
+  </div>
+
+  <!-- MUSIC PLAYER -->
+  <div class="music-player">
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">▶️</button>
+    <div class="music-info">Romantic Melody</div>
+    <div class="music-visualizer hidden" id="visualizer">
+      <div class="music-bar"></div>
+      <div class="music-bar"></div>
+      <div class="music-bar"></div>
+      <div class="music-bar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4a3f8c38a0.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// SPLASH SCREEN
+window.addEventListener('load', () => {
+  createFloatingElements();
+
+  setTimeout(() => {
+    document.getElementById('splashScreen').classList.add('hide');
+    setTimeout(() => {
+      document.getElementById('splashScreen').style.display = 'none';
+      document.getElementById('appContainer').classList.add('show');
+    }, 800);
+  }, 3000);
+});
+
+// CREATE FLOATING BALLOONS AND HEARTS
+function createFloatingElements() {
+  const container = document.getElementById('floatingElements');
+  const balloons = ['🎈', '🎈', '🎈', '🎈'];
+  const hearts = ['💕', '💖', '💗', '❤️', '💝'];
+
+  for (let i = 0; i < 8; i++) {
+    const balloon = document.createElement('div');
+    balloon.className = 'balloon';
+    balloon.textContent = balloons[Math.floor(Math.random() * balloons.length)];
+    balloon.style.left = Math.random() * 100 + '%';
+    balloon.style.animationDelay = Math.random() * 4 + 's';
+    balloon.style.animationDuration = (8 + Math.random() * 4) + 's';
+    container.appendChild(balloon);
+  }
+
+  for (let i = 0; i < 12; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heart-float';
+    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    heart.style.left = Math.random() * 100 + '%';
+    heart.style.animationDelay = Math.random() * 5 + 's';
+    heart.style.animationDuration = (6 + Math.random() * 3) + 's';
+    container.appendChild(heart);
+  }
+}
+
+// MUSIC CONTROLS
+const audio = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+const visualizer = document.getElementById('visualizer');
+let isPlaying = false;
+
+function toggleMusic() {
+  if (isPlaying) {
+    audio.pause();
+    musicBtn.textContent = '▶️';
+    visualizer.classList.add('hidden');
+  } else {
+    audio.play();
+    musicBtn.textContent = '⏸️';
+    visualizer.classList.remove('hidden');
+  }
+  isPlaying = !isPlaying;
+}
+
+// REVEAL HIDDEN MESSAGE
+function revealAnswer() {
+  const hiddenMsg = document.getElementById('hiddenMessage');
+  hiddenMsg.classList.remove('hidden');
+
+  setTimeout(() => {
+    hiddenMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
+
+  createHeartBurst();
+}
+
+// HEART BURST ANIMATION
+function createHeartBurst() {
+  const container = document.getElementById('floatingElements');
+  const hearts = ['💕', '💖', '💗', '❤️', '💝', '💓'];
+
+  for (let i = 0; i < 20; i++) {
+    const heart = document.createElement('div');
+    heart.style.position = 'fixed';
+    heart.style.fontSize = '24px';
+    heart.style.left = '50%';
+    heart.style.top = '50%';
+    heart.style.pointerEvents = 'none';
+    heart.style.zIndex = '9999';
+    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+    const angle = (Math.PI * 2 * i) / 20;
+    const velocity = 100 + Math.random() * 100;
+    const tx = Math.cos(angle) * velocity;
+    const ty = Math.sin(angle) * velocity;
+
+    heart.animate([
+      { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
+      { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1)`, opacity: 0 }
+    ], {
+      duration: 1000 + Math.random() * 500,
+      easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+    }).onfinish = () => heart.remove();
+
+    container.appendChild(heart);
+  }
+}
+
+// CONTINUOUS FLOATING ELEMENTS
+setInterval(() => {
+  if (document.getElementById('appContainer').classList.contains('show')) {
+    const container = document.getElementById('floatingElements');
+    if (container.children.length < 30) {
+      createFloatingElements();
+    }
+  }
+}, 5000);
+</script>
+
+</body>
+</html>
