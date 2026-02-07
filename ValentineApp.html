@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You ❤️</title>
+<title>Valentine's Love Story</title>
 <style>
 * {
   margin: 0;
@@ -12,352 +12,735 @@
 }
 
 body {
-  font-family: -apple-system, sans-serif;
-  background: #1a0f2e;
-  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #1a0b2e 100%);
+  color: #ffffff;
+  min-height: 100vh;
   padding: 20px;
+  position: relative;
   overflow-x: hidden;
 }
 
-/* FLOATING BACKGROUND */
-.floaters {
+/* ANIMATED BACKGROUND */
+.bg-animation {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
+  overflow: hidden;
 }
 
-.float {
+.heart-float, .balloon-float {
   position: absolute;
-  font-size: 25px;
-  animation: rise 10s ease-in-out infinite;
+  font-size: 30px;
+  animation: floatUp 12s ease-in infinite;
+  opacity: 0;
 }
 
-@keyframes rise {
-  0% { transform: translateY(100vh); opacity: 0; }
-  50% { opacity: 0.6; }
-  100% { transform: translateY(-100vh); opacity: 0; }
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 
-/* MAIN CONTENT */
+/* MAIN CONTAINER */
 .container {
+  max-width: 800px;
+  margin: 0 auto;
   position: relative;
   z-index: 10;
-  max-width: 700px;
-  margin: 0 auto;
 }
 
-h1 {
+/* HEADER */
+.header {
   text-align: center;
-  font-size: 40px;
-  margin: 20px 0 10px;
-  color: #ffd700;
-}
-
-.subtitle {
-  text-align: center;
-  font-size: 16px;
-  color: #ff69b4;
+  padding: 40px 20px;
   margin-bottom: 30px;
+  background: linear-gradient(135deg, rgba(255, 20, 147, 0.2), rgba(138, 43, 226, 0.2));
+  border-radius: 30px;
+  border: 3px solid rgba(255, 105, 180, 0.5);
+  backdrop-filter: blur(10px);
 }
 
-/* CARD */
-.card {
-  background: linear-gradient(135deg, #2d1b4e 0%, #1f0f3d 100%);
-  border: 3px solid #ff69b4;
-  border-radius: 20px;
-  padding: 25px;
-  margin-bottom: 25px;
-  box-shadow: 0 10px 40px rgba(255, 105, 180, 0.3);
-}
-
-.card h2 {
-  font-size: 24px;
-  color: #ffd700;
+.header h1 {
+  font-size: 48px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff69b4, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 15px;
+  text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+}
+
+.header p {
+  font-size: 20px;
+  color: #ffd700;
+  font-weight: 500;
+}
+
+/* CARD STYLES */
+.card {
+  background: linear-gradient(135deg, rgba(45, 27, 78, 0.9), rgba(31, 15, 61, 0.9));
+  border: 3px solid #ff69b4;
+  border-radius: 25px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 15px 50px rgba(255, 105, 180, 0.4);
+  backdrop-filter: blur(20px);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 60px rgba(255, 105, 180, 0.6);
+}
+
+.card-header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(255, 105, 180, 0.3);
 }
 
-.icon {
-  font-size: 30px;
-}
-
-.card p {
-  font-size: 17px;
-  line-height: 1.6;
-  color: #ffffff;
-  margin-bottom: 15px;
-}
-
-.card img {
-  width: 100%;
+.card-icon {
+  font-size: 40px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff1493, #ff69b4);
   border-radius: 15px;
-  margin-top: 15px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 20px rgba(255, 20, 147, 0.4);
 }
 
-/* TIMELINE */
+.card-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffd700;
+  text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+}
+
+.card-text {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  margin-top: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 105, 180, 0.3);
+}
+
+/* TIMELINE STYLES */
 .timeline {
-  margin: 15px 0;
+  margin-top: 25px;
 }
 
 .timeline-item {
-  margin-bottom: 20px;
-  padding-left: 25px;
-  border-left: 3px solid #ff69b4;
   position: relative;
+  padding-left: 40px;
+  margin-bottom: 35px;
+  border-left: 4px solid #ff69b4;
 }
 
 .timeline-item::before {
   content: '●';
   position: absolute;
-  left: -9px;
-  color: #ff69b4;
-  font-size: 20px;
+  left: -13px;
+  top: 0;
+  font-size: 24px;
+  color: #ff1493;
+  text-shadow: 0 0 20px #ff1493;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
 }
 
 .timeline-date {
+  font-size: 16px;
+  font-weight: 700;
   color: #ffd700;
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .timeline-text {
-  color: white;
-  font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 10px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #ffffff;
+  margin-bottom: 15px;
 }
 
-.timeline-item img {
+.timeline-image {
   width: 100%;
-  border-radius: 10px;
-  margin-top: 10px;
+  height: auto;
+  border-radius: 15px;
+  margin-top: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 105, 180, 0.2);
 }
 
 /* BUTTON */
-.btn {
+.btn-primary {
   width: 100%;
-  padding: 20px;
-  background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+  padding: 22px;
+  background: linear-gradient(135deg, #ff1493 0%, #ff69b4 50%, #ffd700 100%);
   border: none;
-  border-radius: 15px;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
-  margin-top: 15px;
+  box-shadow: 0 10px 40px rgba(255, 20, 147, 0.5);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.btn:active {
-  transform: scale(0.98);
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 50px rgba(255, 20, 147, 0.7);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
 }
 
 /* MUSIC PLAYER */
-.music {
+.music-player {
   position: fixed;
-  bottom: 25px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #2d1b4e 0%, #1f0f3d 100%);
+  background: linear-gradient(135deg, rgba(45, 27, 78, 0.95), rgba(31, 15, 61, 0.95));
   border: 3px solid #ff69b4;
-  border-radius: 50px;
-  padding: 15px 30px;
+  border-radius: 60px;
+  padding: 18px 35px;
   display: flex;
   align-items: center;
-  gap: 15px;
-  box-shadow: 0 8px 30px rgba(255, 105, 180, 0.5);
+  gap: 18px;
+  box-shadow: 0 15px 50px rgba(255, 105, 180, 0.6);
+  backdrop-filter: blur(30px);
   z-index: 1000;
+  animation: slideUp 0.5s ease-out;
 }
 
-.play-btn {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+.music-btn {
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(135deg, #ff1493, #ff69b4);
   border: none;
   border-radius: 50%;
   color: white;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 20px rgba(255, 20, 147, 0.4);
+  transition: all 0.3s ease;
 }
 
-.music-label {
-  color: white;
+.music-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 30px rgba(255, 20, 147, 0.6);
+}
+
+.music-btn:active {
+  transform: scale(0.95);
+}
+
+.music-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.music-title {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
+  color: #ffd700;
 }
 
+.music-status {
+  font-size: 13px;
+  color: #ff69b4;
+}
+
+.visualizer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+}
+
+.bar {
+  width: 4px;
+  background: linear-gradient(to top, #ff1493, #ffd700);
+  border-radius: 2px;
+  animation: wave 0.8s ease-in-out infinite;
+}
+
+.bar:nth-child(1) { animation-delay: 0s; }
+.bar:nth-child(2) { animation-delay: 0.1s; }
+.bar:nth-child(3) { animation-delay: 0.2s; }
+.bar:nth-child(4) { animation-delay: 0.3s; }
+.bar:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wave {
+  0%, 100% {
+    height: 10px;
+  }
+  50% {
+    height: 30px;
+  }
+}
+
+/* HIDDEN */
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+/* LOADING PLACEHOLDER */
+.img-loading {
+  background: linear-gradient(90deg, #2d1b4e 0%, #3d2b5e 50%, #2d1b4e 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 36px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 22px;
+  }
+
+  .card-text {
+    font-size: 16px;
+  }
+
+  .music-player {
+    padding: 15px 25px;
+  }
+}
+
+/* HEART EXPLOSION */
+@keyframes explode {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(360deg);
+    opacity: 0;
+  }
 }
 </style>
 </head>
 <body>
 
-<!-- FLOATING ELEMENTS -->
-<div class="floaters" id="bg"></div>
+<!-- ANIMATED BACKGROUND -->
+<div class="bg-animation" id="bgAnimation"></div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN CONTAINER -->
 <div class="container">
 
-  <h1>💕 Our Love Story 💕</h1>
-  <p class="subtitle">A Journey Through Time & Love</p>
-
-  <!-- CARD 1 -->
-  <div class="card">
-    <h2><span class="icon">✨</span> Welcome, My Love</h2>
-    <p>This isn't just an app—it's a time capsule of every moment that led us here. From galaxies forming billions of years ago to the exact second our eyes met in Paris.</p>
-    <img src="https://gleanil14.github.io/valentine-photos/IMG_8913.JPG" alt="Watch">
+  <!-- HEADER -->
+  <div class="header">
+    <h1>💕 Our Love Story 💕</h1>
+    <p>A Journey Through Time, Space & Infinite Love</p>
   </div>
 
-  <!-- CARD 2 - TIMELINE -->
+  <!-- CARD 1: WELCOME -->
   <div class="card">
-    <h2><span class="icon">⏳</span> Through the Ages</h2>
+    <div class="card-header">
+      <div class="card-icon">✨</div>
+      <div class="card-title">Welcome to Our Universe</div>
+    </div>
+    <div class="card-text">
+      This isn't just an app, my love. This is a time capsule—a digital monument to every single moment that the universe conspired to bring us together. From the first atoms forged in the heart of dying stars to the exact second our eyes met and time stood still. Every particle, every choice, every breath across 13.8 billion years led to this: us.
+    </div>
+    <div class="card-text">
+      Close your eyes for a moment. Feel your heartbeat. That rhythm is ancient—billions of years old. The carbon in your body, the oxygen you breathe, the iron in your blood—all of it was created in the cores of massive stars that exploded long before Earth existed. And somehow, impossibly, perfectly... that stardust became you. And found me.
+    </div>
+    <img src="https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?w=800&q=80" alt="Beautiful sunset" class="card-image">
+  </div>
+
+  <!-- CARD 2: TIMELINE -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">⏳</div>
+      <div class="card-title">Through the Ages of Time</div>
+    </div>
+    <div class="card-text">
+      Let me take you on a journey through time—from the birth of the universe to the moment everything made sense...
+    </div>
 
     <div class="timeline">
+
       <div class="timeline-item">
-        <div class="timeline-date">13.8 Billion Years Ago</div>
-        <div class="timeline-text">When galaxies were forming in the cosmic dance, the atoms that would one day make us were being forged in distant stars ✨</div>
-        <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" alt="Galaxy">
+        <div class="timeline-date">13.8 Billion Years Ago — The Beginning</div>
+        <div class="timeline-text">
+          In a fraction of a second, the universe exploded into existence. Space, time, matter, energy—all born in an instant of infinite heat and light. Hydrogen atoms formed. Gravity pulled them together. The first stars ignited, burning bright and fierce, creating the very elements that would one day become us. This was the universe's first gift: the building blocks of love.
+        </div>
+        <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&q=80" alt="Galaxy" class="timeline-image">
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-date">4,500 Years Ago</div>
-        <div class="timeline-text">When pyramids were rising stone by stone under Egyptian skies, humanity was building monuments—but none as timeless as what we'd create 🏛️</div>
-        <img src="https://media.giphy.com/media/26FLdGCYk1RIXl5rG/giphy.gif" alt="Pyramids">
+        <div class="timeline-date">4.6 Billion Years Ago — Earth is Born</div>
+        <div class="timeline-text">
+          Our planet formed from cosmic dust and debris, a molten ball of rock spinning through the void. Over millions of years, it cooled. Water appeared. Continents emerged. Lightning struck primordial oceans, and in that electric moment, life began. Single cells multiplied, evolved, became complex. The universe was patient—it knew we were coming.
+        </div>
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80" alt="Earth from space" class="timeline-image">
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-date">500 Years Ago</div>
-        <div class="timeline-text">When histories were written in blood and glory, artists painted masterpieces, never knowing the greatest art would be two hearts finding each other 🎨</div>
-        <img src="https://media.giphy.com/media/xUOxeZy95wcv6hJfQQ/giphy.gif" alt="History">
+        <div class="timeline-date">5,000 Years Ago — Civilizations Rise</div>
+        <div class="timeline-text">
+          Humans built pyramids under desert skies. They carved temples into mountains. They wrote the first love poems on clay tablets and papyrus scrolls. Artists painted walls with ochre and hope. Musicians discovered harmony. Philosophers pondered the meaning of connection. Every love song ever written, every poem ever penned, was practice—preparation for what we would become.
+        </div>
+        <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?w=800&q=80" alt="Ancient pyramids" class="timeline-image">
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-date">The Modern World</div>
-        <div class="timeline-text">When the world became connected, when planes could fly us across oceans, destiny was preparing the perfect moment for two souls to collide 🌍</div>
-        <img src="https://gleanil14.github.io/valentine-photos/IMG_9147.JPG" alt="Paris Street">
+        <div class="timeline-date">500 Years Ago — The Renaissance</div>
+        <div class="timeline-text">
+          Michelangelo painted the Sistine Chapel. Shakespeare wrote sonnets about love that transcends time. Da Vinci sketched flying machines and studied the human heart. Artists across the world tried to capture beauty, passion, devotion—but they could only imagine what we would know. They painted love; we live it.
+        </div>
+        <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=800&q=80" alt="Art and culture" class="timeline-image">
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-date">That Perfect Day in Paris</div>
-        <div class="timeline-text">And then... beneath the Arc de Triomphe, time stopped. The universe had been preparing for this moment. For us. 🗼❤️</div>
-        <img src="https://gleanil14.github.io/valentine-photos/IMG_9162.JPG" alt="Us">
+        <div class="timeline-date">100 Years Ago — The Modern Age</div>
+        <div class="timeline-text">
+          Technology exploded. Airplanes conquered skies. Radio waves carried voices across oceans. Cinema showed moving pictures of dreams. The world grew smaller, faster, more connected. Our grandparents were born into a world preparing itself—building the bridges, roads, and technologies that would eventually let two souls from different places find each other.
+        </div>
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80" alt="Airplane in sky" class="timeline-image">
       </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">The Day We Were Born</div>
+        <div class="timeline-text">
+          Somewhere in the vast timeline of existence, you arrived. In another place, at another moment, so did I. We grew up in different worlds, dreaming different dreams, walking different paths. But even then, invisible threads were pulling us together. Every choice we made, every left turn instead of right, every "yes" and every "no"—all of it was leading us to the same destination.
+        </div>
+        <img src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=800&q=80" alt="Newborn baby" class="timeline-image">
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">That Perfect Moment — When Time Stopped</div>
+        <div class="timeline-text">
+          And then it happened. Against odds so astronomical they shouldn't exist, our paths crossed. Maybe it was in a crowded room. Maybe under city lights. Maybe in a moment so quiet the universe held its breath. Our eyes met. Time froze. And suddenly, 13.8 billion years of cosmic history made perfect sense. Every supernova, every extinction, every war and peace and moment of joy—all of it was orchestrated for this: for us to find each other.
+        </div>
+        <img src="https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=800&q=80" alt="Couple together" class="timeline-image">
+      </div>
+
     </div>
   </div>
 
-  <!-- CARD 3 -->
+  <!-- CARD 3: MEMORIES -->
   <div class="card">
-    <h2><span class="icon">🖼️</span> Every Moment Together</h2>
-    <p>From museums to streets, from sunrise to sunset—every frame with you is a masterpiece.</p>
-    <img src="https://gleanil14.github.io/valentine-photos/IMG_9133.JPG" alt="Museum">
+    <div class="card-header">
+      <div class="card-icon">🖼️</div>
+      <div class="card-title">Every Moment is Infinite</div>
+    </div>
+    <div class="card-text">
+      From sunrise conversations to midnight laughter, from museum halls to cobblestone streets—every second with you is a universe unto itself. Time moves differently when you're in love. Minutes stretch into eternities. Hours vanish in heartbeats. And somehow, it's never enough.
+    </div>
+    <div class="card-text">
+      I remember the way sunlight catches in your hair. The sound of your laugh—the real one, the unguarded one that makes everything else disappear. The way you look at art, at the world, at me. Every memory is crystalline, precious, eternal.
+    </div>
+    <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&q=80" alt="Beautiful memories" class="card-image">
   </div>
 
-  <!-- CARD 4 - QUESTION -->
+  <!-- CARD 4: THE SCIENCE OF US -->
   <div class="card">
-    <h2><span class="icon">💭</span> A Question for You</h2>
-    <p>Do you believe in destiny? That every star, every moment, every choice across billions of years was orchestrated just so we could find each other?</p>
-    <button class="btn" onclick="showMessage()">Yes, I Believe 💫</button>
+    <div class="card-header">
+      <div class="card-icon">🔬</div>
+      <div class="card-title">The Mathematics of Love</div>
+    </div>
+    <div class="card-text">
+      Do you know the probability of us existing? Of you being born exactly as you are? It's approximately 1 in 10²⁶⁸⁵⁰⁰⁰. That's a number with 2,685,000 zeros. Your existence is a mathematical impossibility—and yet, here you are.
+    </div>
+    <div class="card-text">
+      Now calculate the odds of us meeting. Factor in geography, timing, every choice our ancestors made for thousands of years. The probability approaches zero. And yet it happened. We happened. Against impossible odds, against the vast indifference of an infinite universe, somehow... we found each other.
+    </div>
+    <div class="card-text">
+      Scientists might call it chance. Philosophers might call it fate. Religious folks might call it divine intervention. I call it what it is: the universe keeping a promise it made 13.8 billion years ago when it decided to begin.
+    </div>
+    <img src="https://images.unsplash.com/photo-1462556791646-c201b8241a94?w=800&q=80" alt="Stars and universe" class="card-image">
   </div>
 
-  <!-- HIDDEN CARD -->
-  <div class="card hidden" id="secret">
-    <h2><span class="icon">💖</span> Then You Already Know...</h2>
-    <p>That you're not just my Valentine—you're my universe. Every sunrise, every heartbeat, every moment forward... it's all for you. Happy Valentine's Day, my love. Here's to infinity together. 🌟</p>
-    <img src="https://gleanil14.github.io/valentine-photos/IMG_9151.JPG" alt="Paris Night">
+  <!-- CARD 5: QUESTION -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">💭</div>
+      <div class="card-title">A Question for Your Heart</div>
+    </div>
+    <div class="card-text">
+      After everything—after all those billions of years, after every impossible coincidence, after every moment that led us here—do you believe in destiny? Do you believe the universe conspired to bring us together? Do you believe in us?
+    </div>
+    <div class="card-text">
+      Because I do. With every atom of my stardust body, with every beat of my ancient heart, with every breath of this miracle we call life—I believe. I believe in you. I believe in us. I believe in love that transcends time itself.
+    </div>
+    <button class="btn-primary" onclick="revealTruth()">Yes, I Believe in Us 💫</button>
   </div>
 
-  <div style="height: 120px;"></div>
+  <!-- HIDDEN CARD: THE TRUTH -->
+  <div class="card hidden" id="secretCard">
+    <div class="card-header">
+      <div class="card-icon">💖</div>
+      <div class="card-title">Then You Already Know The Truth</div>
+    </div>
+    <div class="card-text">
+      You're not just my Valentine. You're not just my love. You're my universe—the answer to every question I never knew to ask. You're the reason stars burn, the reason poets write, the reason the universe decided to exist at all.
+    </div>
+    <div class="card-text">
+      Every sunrise is more beautiful because you're in it. Every song is sweeter because you might hear it. Every moment forward is an adventure because you're by my side. Past, present, future—none of it matters except this: we're together.
+    </div>
+    <div class="card-text">
+      So here's my promise, carved into the fabric of spacetime itself: I will love you through every moment. Through quiet mornings and wild adventures. Through laughter and tears. Through certainty and doubt. Through everything the universe throws at us. Because after 13.8 billion years of preparation, I'm not about to let go of the greatest miracle existence ever produced.
+    </div>
+    <div class="card-text" style="font-size: 24px; text-align: center; margin-top: 30px; color: #ffd700; font-weight: 700;">
+      Happy Valentine's Day, My Love. Here's to infinity. Together. 💕✨🌟
+    </div>
+    <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=800&q=80" alt="Eternal love" class="card-image">
+  </div>
+
+  <!-- SPACING -->
+  <div style="height: 150px;"></div>
+
 </div>
 
 <!-- MUSIC PLAYER -->
-<div class="music">
-  <button class="play-btn" id="btn" onclick="toggleMusic()">▶️</button>
-  <div class="music-label" id="label">Click to Play Music</div>
+<div class="music-player" id="musicPlayer">
+  <button class="music-btn" id="playBtn" onclick="toggleMusic()">
+    ▶️
+  </button>
+  <div class="music-info">
+    <div class="music-title">Romantic Melody</div>
+    <div class="music-status" id="musicStatus">Click to Play</div>
+  </div>
+  <div class="visualizer hidden" id="visualizer">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
 </div>
 
-<audio id="audio" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4a3f8c38a0.mp3">
+<!-- AUDIO -->
+<audio id="audio" loop preload="auto">
+  <source src="https://cdn.pixabay.com/audio/2024/03/19/audio_48e8bcfc40.mp3" type="audio/mpeg">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// Create floating elements
-const bg = document.getElementById('bg');
-const emojis = ['🎈', '💕', '💖', '💗', '❤️'];
+// CREATE FLOATING BACKGROUND ELEMENTS
+function createFloatingElement() {
+  const bg = document.getElementById('bgAnimation');
+  const elements = ['🎈', '💕', '💖', '💗', '❤️', '💝', '🌹', '✨', '⭐', '💫'];
 
-function addFloat() {
   const el = document.createElement('div');
-  el.className = 'float';
-  el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  const isHeart = Math.random() > 0.5;
+  el.className = isHeart ? 'heart-float' : 'balloon-float';
+  el.textContent = elements[Math.floor(Math.random() * elements.length)];
   el.style.left = Math.random() * 100 + '%';
-  el.style.animationDelay = Math.random() * 3 + 's';
-  el.style.animationDuration = (8 + Math.random() * 4) + 's';
+  el.style.animationDelay = Math.random() * 5 + 's';
+  el.style.animationDuration = (10 + Math.random() * 5) + 's';
+
   bg.appendChild(el);
-  setTimeout(() => el.remove(), 12000);
+
+  setTimeout(() => el.remove(), 15000);
 }
 
-for (let i = 0; i < 10; i++) addFloat();
-setInterval(addFloat, 2000);
+// Initialize floating elements
+for (let i = 0; i < 15; i++) {
+  setTimeout(createFloatingElement, i * 300);
+}
 
-// Music player
+// Continuously create new elements
+setInterval(createFloatingElement, 2000);
+
+// MUSIC PLAYER
 const audio = document.getElementById('audio');
-const btn = document.getElementById('btn');
-const label = document.getElementById('label');
-let playing = false;
+const playBtn = document.getElementById('playBtn');
+const musicStatus = document.getElementById('musicStatus');
+const visualizer = document.getElementById('visualizer');
+let isPlaying = false;
 
 function toggleMusic() {
-  if (playing) {
+  if (isPlaying) {
     audio.pause();
-    btn.textContent = '▶️';
-    label.textContent = 'Click to Play Music';
-    playing = false;
+    playBtn.textContent = '▶️';
+    musicStatus.textContent = 'Click to Play';
+    visualizer.classList.add('hidden');
+    isPlaying = false;
   } else {
-    audio.play();
-    btn.textContent = '⏸️';
-    label.textContent = 'Romantic Melody Playing';
-    playing = true;
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        playBtn.textContent = '⏸️';
+        musicStatus.textContent = 'Now Playing...';
+        visualizer.classList.remove('hidden');
+        isPlaying = true;
+      }).catch(error => {
+        console.log('Playback prevented:', error);
+        musicStatus.textContent = 'Click to Play';
+        alert('Please tap the play button to start music! 🎵');
+      });
+    }
   }
 }
 
-// Show secret message
-function showMessage() {
-  document.getElementById('secret').classList.remove('hidden');
-  document.getElementById('secret').scrollIntoView({ behavior: 'smooth' });
+// REVEAL SECRET MESSAGE
+function revealTruth() {
+  const secretCard = document.getElementById('secretCard');
+  secretCard.classList.remove('hidden');
 
-  if (!playing) toggleMusic();
+  // Smooth scroll to the secret card
+  setTimeout(() => {
+    secretCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
 
-  // Heart explosion
-  for (let i = 0; i < 15; i++) {
+  // Auto-play music if not playing
+  if (!isPlaying) {
+    toggleMusic();
+  }
+
+  // Create heart explosion effect
+  createHeartExplosion();
+}
+
+// HEART EXPLOSION ANIMATION
+function createHeartExplosion() {
+  const hearts = ['💖', '💕', '💗', '💝', '❤️', '💓', '💞'];
+  const numHearts = 25;
+
+  for (let i = 0; i < numHearts; i++) {
     const heart = document.createElement('div');
-    heart.textContent = '💖';
+    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
     heart.style.position = 'fixed';
-    heart.style.fontSize = '35px';
+    heart.style.fontSize = (25 + Math.random() * 20) + 'px';
     heart.style.left = '50%';
     heart.style.top = '50%';
-    heart.style.zIndex = '9999';
+    heart.style.zIndex = '10000';
     heart.style.pointerEvents = 'none';
 
-    const angle = (Math.PI * 2 * i) / 15;
-    const dist = 200;
-    const x = Math.cos(angle) * dist;
-    const y = Math.sin(angle) * dist;
+    const angle = (Math.PI * 2 * i) / numHearts;
+    const velocity = 150 + Math.random() * 150;
+    const tx = Math.cos(angle) * velocity;
+    const ty = Math.sin(angle) * velocity;
 
-    heart.animate([
-      { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
-      { transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.5)`, opacity: 0 }
-    ], { duration: 1200 }).onfinish = () => heart.remove();
+    const animation = heart.animate([
+      {
+        transform: 'translate(-50%, -50%) scale(0) rotate(0deg)',
+        opacity: 1
+      },
+      {
+        transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.5) rotate(${360 + Math.random() * 360}deg)`,
+        opacity: 0
+      }
+    ], {
+      duration: 1000 + Math.random() * 500,
+      easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+    });
 
+    animation.onfinish = () => heart.remove();
     document.body.appendChild(heart);
   }
+
+  // Create second wave
+  setTimeout(() => {
+    for (let i = 0; i < 15; i++) {
+      const star = document.createElement('div');
+      star.textContent = '✨';
+      star.style.position = 'fixed';
+      star.style.fontSize = '30px';
+      star.style.left = (20 + Math.random() * 60) + '%';
+      star.style.top = (20 + Math.random() * 60) + '%';
+      star.style.zIndex = '10000';
+      star.style.pointerEvents = 'none';
+
+      star.animate([
+        { transform: 'scale(0) rotate(0deg)', opacity: 0 },
+        { transform: 'scale(2) rotate(180deg)', opacity: 1 },
+        { transform: 'scale(0) rotate(360deg)', opacity: 0 }
+      ], {
+        duration: 1500,
+        easing: 'ease-in-out'
+      }).onfinish = () => star.remove();
+
+      document.body.appendChild(star);
+    }
+  }, 300);
 }
+
+// Preload audio
+audio.load();
+
+console.log('💕 Valentine App Loaded Successfully! 💕');
 </script>
 
 </body>
